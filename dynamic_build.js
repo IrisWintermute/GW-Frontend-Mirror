@@ -69,7 +69,7 @@ load_2 = function() {
 
 rec_get_h = function (entry) {
     if (hobints[entry] == undefined) { return undefined }
-    let out = [];
+    let out = [entry];
     for (let h of hobints[entry]) {
         out.push(h);
         const out_r = rec_get_h(h);
@@ -84,8 +84,11 @@ load_next = function (s) {
     if (hobints_selected[s] == 1) {
         const div = document.getElementById(s);
         delete hobints_selected[s];
-        for (h of rec_get_h(s)) {
-            delete hobints_selected[h];
+        const local_h = rec_get_h(s);
+        if (local_h != undefined) {
+            for (h of local_h) {
+                delete hobints_selected[h];
+            }
         }
 
         div.innerHTML = "";
