@@ -1,0 +1,10 @@
+{
+    "COMMENT" : "Some names have a space as their final character. This is intentional, and is used to identify root items.",
+    "sports " : ["contact sports", "athletics", "team sports"],
+    "team sports" : ["football", "tennis", "rugby"],
+    "art " : ["digital", "physical"],
+    "physical" : ["painting", "illustration"],
+    "reading " : ["fiction", "non-fiction"],
+    "fiction" : ["fantasy", "science fiction", "crime", "thriller"],
+    "non-fiction" : ["self-help", "biographical", "discussion", "pop-sci"]
+}
