@@ -81,15 +81,11 @@ rec_get_h = function (entry) {
 }
 
 load_next = function (s) {
-    remove_item = function (val, _, arr) {
-        return val != arr[arr.length - 1];
-    }
-    if (hobints_selected[s] != undefined) {
+    if (hobints_selected[s] == 1) {
         const div = document.getElementById(s);
         delete hobints_selected[s];
-        local_h = rec_get_h(s);
-        for (h of local_h) {
-            delete hobints_selected[s];
+        for (h of rec_get_h(s)) {
+            delete hobints_selected[h];
         }
 
         div.innerHTML = "";

@@ -12,15 +12,15 @@ const br = document.createElement("br");
 
 const hobints = {
     "COMMENT" : "Some names have a space as their final character. This is intentional, and is used to identify root items.",
-    "sports " : ["contact-sports", "athletics", "team-sports"],
+    "sports " : ["contact sports", "athletics", "team sports"],
     "team sports" : ["football", "tennis", "rugby"],
     "art " : ["digital", "physical"],
     "physical" : ["painting", "illustration"],
     "reading " : ["fiction", "non-fiction"],
-    "fiction" : ["fantasy", "science-fiction", "crime", "thriller"],
+    "fiction" : ["fantasy", "science fiction", "crime", "thriller"],
     "non-fiction" : ["self-help", "biographical", "discussion", "pop-sci"]
 };
-let hobints_selected = [];
+let hobints_selected = {};
 const hobints_satisfied = 8;
 
 add_child = function(p_id, e_type, attrs, inner) {
@@ -100,29 +100,22 @@ rec_get_h = function (entry) {
 }
 
 load_next = function (s) {
-    remove_item = function (val, _, arr) {
-        return val != arr[arr.length - 1];
-    }
-    const i = hobints_selected.indexOf(s);
-    if (i != -1) {
+    if (hobints_selected[s] == 1) {
         const div = document.getElementById(s);
-        hobints_selected.push(s);
-        hobints_selected = hobints_selected.filter(remove_item);
-        local_h = rec_get_h(s);
-        for (h of local_h) {
-            hobints_selected.push(h);
-            hobints_selected = hobints_selected.filter(remove_item);
+        delete hobints_selected[s];
+        for (h of rec_get_h(s)) {
+            delete hobints_selected[h];
         }
 
         div.innerHTML = "";
         const dbg = document.getElementById("dbg_hobints");
-        dbg.innerHTML = hobints_selected.toString();
+        dbg.innerHTML = Object.keys(hobints_selected).toString();
         update_2_exit();
         return null;
     }
-    hobints_selected.push(s);
+    hobints_selected[s] = 1;
     const dbg = document.getElementById("dbg_hobints");
-    dbg.innerHTML = hobints_selected.toString();
+    dbg.innerHTML = Object.keys(hobints_selected).toString();
     update_2_exit();
     for (let n in hobints[s]) {
         const val = hobints[s][n];
@@ -145,7 +138,7 @@ load_next = function (s) {
 }
 
 update_2_exit = function() {
-    const l = hobints_selected.length;
+    const l = Object.keys(hobints_selected).length;
     // if (l > hobints_satisfied) {l = hobints_satisfied}
     const exit_l = document.getElementById("2_exit_label");
     exit_l.innerHTML = l + " out of " + hobints_satisfied + " hobints selected";
@@ -175,13 +168,13 @@ load_3 = function() {}
 <form action="/collect.py" method="get">
     <div id="form_0">
         <label for="name">What is their name?</label><br>
-        <input type="text" name="name" onchange="load_1()"><br>
+        <!--<input type="text" name="name" onchange="load_1()"><br>-->
+        <input type="text" name="name" onclick="load_2()"><br>
     </div><br>
     <div id="form_1"></div><br>
     <div id="form_2"></div>
     <div id="2_exit">
         <label id="dbg_hobints">...</label><br>
-        <label id="dbg_hobints_2">...</label><br>
     </div><br>
     <div id="form_3"></div>
 
