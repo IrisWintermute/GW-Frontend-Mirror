@@ -15,6 +15,7 @@ def build_form():
     out_l = bh[:x + 1] + dbj + bh[x + 1:]
     out = "".join(out_l)
     out = out.replace("{0:1}", hijs)
+    # add global_config insertion
     if debug:
         with open("build_out.html", "w") as f:
             f.write(out)

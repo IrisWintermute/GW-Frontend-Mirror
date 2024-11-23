@@ -4,6 +4,8 @@ const hobints = {0:1};
 let hobints_selected = {};
 const hobints_satisfied = 8;
 
+let sliders = 0;
+
 add_child = function(p_id, e_type, attrs, inner) {
     let p = document.getElementById(p_id);
     let e = document.createElement(e_type);
@@ -26,7 +28,7 @@ load_1 = function() {
         ["name", "age"],
         ["min", 0],
         ["max", 130],
-        ["onclick", "load_2()"]
+        ["onchange", "load_2()"]
     ]);
     add_child("form_1", "label", a_label, "How old are they?");
     d.appendChild(br.cloneNode());
@@ -93,13 +95,13 @@ load_next = function (s) {
 
         div.innerHTML = "";
         const dbg = document.getElementById("dbg_hobints");
-        dbg.innerHTML = Object.keys(hobints_selected).toString();
+        //dbg.innerHTML = Object.keys(hobints_selected).toString();
         update_2_exit();
         return null;
     }
     hobints_selected[s] = 1;
     const dbg = document.getElementById("dbg_hobints");
-    dbg.innerHTML = Object.keys(hobints_selected).toString();
+    //dbg.innerHTML = Object.keys(hobints_selected).toString();
     update_2_exit();
     for (let n in hobints[s]) {
         const val = hobints[s][n];
@@ -123,7 +125,6 @@ load_next = function (s) {
 
 update_2_exit = function() {
     const l = Object.keys(hobints_selected).length;
-    // if (l > hobints_satisfied) {l = hobints_satisfied}
     const exit_l = document.getElementById("2_exit_label");
     exit_l.innerHTML = l + " out of " + hobints_satisfied + " hobints selected";
     if (l == hobints_satisfied) {
@@ -131,20 +132,37 @@ update_2_exit = function() {
     }
 }   
 
-load_3 = function() {}
-    // add_child("form_3", "div", new Map([["class", "slidecontainer"]]));
-    const a_range = new Map([
-        ["type", "range"],
-        ["min", 1],
-        ["max", 16],
-        ["value", 8]
+load_3 = function() {
+    document.getElementById("form_3").style.display = "block";
+}
+
+update_slider = function() {
+    if (sliders <= 4) {sliders += 1}
+    //document.getElementById("dbg_hobints").innerHTML = sliders;
+    if (sliders == 3) {
+        load_4();
+    }
+}
+
+load_4 = function() {
+    document.getElementById("form_4").style.display = "inline";
+}
+
+update_cost_ceil = function() {
+    document.getElementById("ceil").innerHTML = "";
+    const v = document.getElementById("min_cost").value;
+    const a_label = new Map([
+        ["for", "max_cost"]
     ]);
-    const a_div = new Map([
-        ["class", "slide_div"],
-        ["id", "s_1"]
-    ]);
-    // add_child("form_3", "div", a_div)
-    add_child("form_3", "p", new Map([]), "More funny or more practical?");
-    add_child("form_3", "input", a_range);
-// gift theme, funny - practical
-// list of sliders
+    add_child("ceil", "label", a_label, "And what's your cost ceiling?");
+    const a_num = new Map([
+            ["type", "number"],
+            ["onchange", "load_5()"],
+            ["value", v],
+            ["min", v],
+            ["max", 400],
+            ["id", "max_cost"]
+        ]);
+    add_child("ceil", "input", a_num);
+
+}
