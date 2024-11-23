@@ -128,24 +128,20 @@ update_2_exit = function() {
     const exit_l = document.getElementById("2_exit_label");
     exit_l.innerHTML = l + " out of " + hobints_satisfied + " hobints selected";
     if (l == hobints_satisfied) {
-        load_3();
+        reveal("form_3");
     }
 }   
 
-load_3 = function() {
-    document.getElementById("form_3").style.display = "block";
+reveal = function(id) {
+    document.getElementById(id).style.display = "block";
 }
 
 update_slider = function() {
     if (sliders <= 4) {sliders += 1}
     //document.getElementById("dbg_hobints").innerHTML = sliders;
     if (sliders == 3) {
-        load_4();
+        reveal("form_4");
     }
-}
-
-load_4 = function() {
-    document.getElementById("form_4").style.display = "inline";
 }
 
 update_cost_ceil = function() {
@@ -154,10 +150,10 @@ update_cost_ceil = function() {
     const a_label = new Map([
         ["for", "max_cost"]
     ]);
-    add_child("ceil", "label", a_label, "And what's your cost ceiling?");
+    add_child("ceil", "label", a_label, "And what's your cost ceiling? ");
     const a_num = new Map([
             ["type", "number"],
-            ["onchange", "load_5()"],
+            ["onchange", 'reveal("form_5")'],
             ["value", v],
             ["min", v],
             ["max", 400],

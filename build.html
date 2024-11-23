@@ -6,7 +6,7 @@
         width: 100%;
         display: none;
     }
-    .cost {
+    .nodisp {
         display: none;
     }
 
@@ -15,7 +15,7 @@
 <script>
 </script>
 
-<form action="/collect.py" method="get">
+<form action="/collect.py" method="post" target="_self">
     <div id="form_0">
         <label for="name">What's their name?</label><br>
         <!--<input type="text" name="name" onchange="load_1()"><br>-->
@@ -39,10 +39,15 @@
         <input id="s_3" type="range" min=1 max=10 onchange="update_slider()">
         <label for="s_3">Useful</label><br><br>
     </div>
-    <div id="form_4" class="cost">
+    <div id="form_4" class="nodisp">
         <label for="min_cost">What's your cost floor?</label>
         <input type="number" min=1 max=400 value=0 id="min_cost" onchange="update_cost_ceil()"><br><br>
         <div id="ceil"></div>
+    </div>
+    <br>
+    <div id="form_5" class="nodisp">
+        <label for="submit">Are you happy with these answers?</label>
+        <input type="submit" value="YES">
     </div>
 
 

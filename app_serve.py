@@ -33,6 +33,7 @@ def get():
 
 @app.post("/collect.py")
 def post(profile):
-    print(profile)
+    with open("data_in", "w") as f:
+        f.write(profile)
 
 serve()
