@@ -11,11 +11,15 @@ def build_form():
         dbj = f.readlines()
     with open("hobints.json", "r") as f:
         hijs = f.read()
+    with open("global_config.json", "r") as f:
+        gcjs = json.load(f)
+
     x = bh.index("<script>\n")
     out_l = bh[:x + 1] + dbj + bh[x + 1:]
     out = "".join(out_l)
     out = out.replace("{0:1}", hijs)
-    # add global_config insertion
+    for v in gcjs.keys():
+        out = out.replace(v, str(gcjs[v]))
     if debug:
         with open("build_out.html", "w") as f:
             f.write(out)
