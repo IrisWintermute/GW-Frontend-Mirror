@@ -1,32 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<head>
 <style>
-    .slide {
-        width: 100%;
-        display: none;
-    }
     .nodisp {
+        max-width: 30%;
         display: none;
+        border-radius: 10px;
+        padding: 5px;
     }
-
+	.flex {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+	}
+	.flex_top {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        max-width: 30%;
+        border-radius: 10px;
+        padding: 5px;
+	}
+    .box {
+        border-radius: 10px;
+        padding: 5px;
+        border: 1px hidden rgb(0, 0, 0);
+        max-width: 30%;
+    }
+    .line {
+        padding: 5px;
+        border: 1px solid black;
+    }
 </style>
 
 <script>
 </script>
-
+</head>
+<body>
 <form action="/collect.py" method="post" target="_self">
-    <div id="form_0">
-        <label for="name">What's their name?</label><br>
-        <!--<input type="text" name="name" onchange="load_1()"><br>-->
-        <input type="text" name="name" onchange="load_1()"><br>
+    <div id="name_age" class="box" style="max-width: 12%;">
+        <div id="form_0">
+            <label for="name">What's their name?</label><br>
+            <!--<input type="text" name="name" onchange="load_1()"><br>-->
+            <input type="text" name="name" onclick="load_1()"><br>
+        </div><br>
+        <div id="form_1"></div>
     </div><br>
-    <div id="form_1"></div><br>
-    <div id="form_2"></div>
-    <div id="2_exit">
-        <!--<label id="dbg_hobints">...</label><br>-->
-    </div><br>
-    <div id="form_3" class="slide">
+    <div id="form_2_pre"></div>
+    <div id="form_2" class="flex_top" style="margin-top: 5px;"></div>
+    <div id="2_exit" class="nodisp">
+        <p id="2_exit_p" class="line" style="max-width: 45%; margin-top: 5px;">0 out of HOBINTS_SATISFIED hobints selected</p>
+    </div>
+    <div id="form_3_pre"></div>
+    <div id="form_3" class="nodisp" style="max-width: 20%; margin-top: 5px;">
         <label for="s_1">Funny</label>
         <input id="s_1" type="range" min=1 max=10 onchange="update_slider()">
         <label for="s_1">Practical</label><br><br>
@@ -38,19 +64,19 @@
         <label for="s_3">Entertaining</label>
         <input id="s_3" type="range" min=1 max=10 onchange="update_slider()">
         <label for="s_3">Useful</label><br><br>
-    </div>
-    <div id="form_4" class="nodisp">
+    </div><br>
+    <div id="form_4" class="nodisp" style="max-width: 18%;">
         <label for="min_cost">What's your cost floor?</label>
-        <input type="number" min=1 max=400 value=0 id="min_cost" onchange="update_cost_ceil()"><br><br>
+        <input type="number" min=1 max=MAX_PRICE value=0 id="min_cost" onchange="update_cost_ceil()"><br><br>
         <div id="ceil"></div>
     </div>
     <br>
-    <div id="form_5" class="nodisp">
+    <div id="form_5" class="nodisp" style="max-width: 18%;">
         <label for="submit">Are you happy with these answers?</label>
         <input type="submit" value="YES">
     </div>
 
 
 </form>
-
+</body>
 </html>

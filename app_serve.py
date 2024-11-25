@@ -32,8 +32,8 @@ def get():
     return build_form()
 
 @app.post("/collect.py")
-def post(profile):
-    with open("data_in", "w") as f:
-        f.write(profile)
+def post():
+    with open("collect.py", "r") as f:
+        return f.read()
 
 serve()

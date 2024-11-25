@@ -2,7 +2,6 @@ const br = document.createElement("br");
 
 const hobints = {0:1};
 let hobints_selected = {};
-const hobints_satisfied = 8;
 
 let sliders = 0;
 
@@ -27,45 +26,56 @@ load_1 = function() {
         ["type", "number"],
         ["name", "age"],
         ["min", 0],
-        ["max", 130],
+        ["max", MAX_AGE],
         ["onchange", "load_2()"]
     ]);
     add_child("form_1", "label", a_label, "How old are they?");
     d.appendChild(br.cloneNode());
     add_child("form_1", "input", a_input);
+    document.getElementById("name_age").style.border = "2px solid black";
 }
 
 load_2 = function() {
     if (document.getElementById("2") != undefined) { return null }
     const d = document.getElementById("form_2");
-    const a_label = new Map([
-        ["for", "hobints"],
-        ["id", "2"]
-    ]);
-    add_child("form_2", "label", a_label, "What are some of their hobbies and interests?");
+    // const a_label = new Map([
+    //     ["for", "hobints"],
+    //     ["id", "2"]
+    // ]);
+    add_child("form_2_pre", "p", new Map([]), "What are some of their hobbies and interests?");
     d.appendChild(br.cloneNode());
+	// const a_div_flex = new Map([
+	// 	["id", "form_2_flex"],
+	// 	["class", "flex"]
+	// ]);
+	// add_child("form_2", "div", a_div_flex);
     for (let n in hobints) {
-        if (n[n.length - 1] != " ") {continue}
+        if (n[n.length - 1] != " ") { continue }
+        const a_div_pair = new Map([
+            ["id", n + "_pair"]
+        ]);
+        add_child("form_2", "div", a_div_pair);
         const a_check = new Map([
             ["type", "checkbox"],
             ["onclick", "load_next('" + n + "')"],
             ["name", "hobby"],
             ["id", n + "_"]
         ]);
-        add_child("form_2", "input", a_check);
+        // parent div is form_2_flex when single top div
+        add_child(n + "_pair", "input", a_check);
         const a_label = new Map([
             ["for", n + "_"]
         ]);
-        add_child("form_2", "label", a_label, n);
+        add_child(n + "_pair", "label", a_label, n);
         const a_div = new Map([
-            ["id", n]
+            ["id", n],
+            ["class", "flex"]
         ]);
         add_child("form_2", "div", a_div);
+        document.getElementById("form_2").style.border = "2px solid black";
+        document.getElementById("2_exit").style.display = "block";
     }
-    a_label_exit = new Map([
-        ["id", "2_exit_label"]
-    ])
-    add_child("2_exit", "label", a_label_exit, "0 out of " + hobints_satisfied + " hobints selected");
+    
 
 }
 
@@ -84,40 +94,50 @@ rec_get_h = function (entry) {
 
 load_next = function (s) {
     if (hobints_selected[s] == 1) {
+		// nested divs -> empty parent div
         const div = document.getElementById(s);
+        div.innerHTML = "";
         delete hobints_selected[s];
         const local_h = rec_get_h(s);
         if (local_h != undefined) {
             for (h of local_h) {
+				// single top div -> remove checkbox via id
+                // if (document.getElementById(h) != null) {
+                //     document.getElementById(h).remove();
+                //     document.getElementById(h + "_").remove();
+                // }
                 delete hobints_selected[h];
             }
         }
 
-        div.innerHTML = "";
-        const dbg = document.getElementById("dbg_hobints");
-        //dbg.innerHTML = Object.keys(hobints_selected).toString();
         update_2_exit();
         return null;
     }
     hobints_selected[s] = 1;
-    const dbg = document.getElementById("dbg_hobints");
-    //dbg.innerHTML = Object.keys(hobints_selected).toString();
     update_2_exit();
     for (let n in hobints[s]) {
         const val = hobints[s][n];
+        // id="val_" when only div has id val
+        const a_div_pair = new Map([
+            ["id", val + "_pair"]
+        ]);
+        add_child(s, "div", a_div_pair);
         const a_check = new Map([
             ["type", "checkbox"],
             ["onclick", "load_next('" + val + "')"],
             ["name", "hobby"],
             ["id", val + "_"]
         ]);
-        add_child(s, "input", a_check);
+        add_child(val + "_pair", "input", a_check);
         const a_label = new Map([
             ["for", val + "_"]
         ]);
-        add_child(s, "label", a_label, val);
+		// id="s" when label+checkbox are added to local div
+        // id="form_2" when label+checkbox added to single top div
+        add_child(val + "_pair", "label", a_label, val);
         const a_div = new Map([
-            ["id", val]
+            ["id", val],
+            ["class", "flex"]
         ]);
         add_child(s, "div", a_div);
     }
@@ -125,26 +145,28 @@ load_next = function (s) {
 
 update_2_exit = function() {
     const l = Object.keys(hobints_selected).length;
-    const exit_l = document.getElementById("2_exit_label");
-    exit_l.innerHTML = l + " out of " + hobints_satisfied + " hobints selected";
-    if (l == hobints_satisfied) {
+    const exit_l = document.getElementById("2_exit_p");
+    exit_l.innerHTML = l + " out of " + HOBINTS_SATISFIED + " hobints selected";
+    if (l == HOBINTS_SATISFIED) {
         reveal("form_3");
+        add_child("form_3_pre", "p", new Map([]), "What kind of gift do you want to get them?");
     }
 }   
 
 reveal = function(id) {
     document.getElementById(id).style.display = "block";
+    document.getElementById(id).style.border = "2px solid black";
 }
 
 update_slider = function() {
     if (sliders <= 4) {sliders += 1}
-    //document.getElementById("dbg_hobints").innerHTML = sliders;
     if (sliders == 3) {
         reveal("form_4");
     }
 }
 
 update_cost_ceil = function() {
+    document.getElementById("form_5").style["max_width"] = "20%";
     document.getElementById("ceil").innerHTML = "";
     const v = document.getElementById("min_cost").value;
     const a_label = new Map([
@@ -156,7 +178,7 @@ update_cost_ceil = function() {
             ["onchange", 'reveal("form_5")'],
             ["value", v],
             ["min", v],
-            ["max", 400],
+            ["max", MAX_PRICE],
             ["id", "max_cost"]
         ]);
     add_child("ceil", "input", a_num);
