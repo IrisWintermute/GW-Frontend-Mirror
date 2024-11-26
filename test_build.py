@@ -1,6 +1,6 @@
 import json
-from app_serve import build_form
+from pylib import build_form
 
 if __name__ == "__main__": 
-    build_form()
+    build_form(debug = True)
     print("Page generated and saved.")

@@ -58,7 +58,7 @@ load_2 = function() {
         const a_check = new Map([
             ["type", "checkbox"],
             ["onclick", "load_next('" + n + "')"],
-            ["name", "hobby"],
+            ["name", n],
             ["id", n + "_"]
         ]);
         // parent div is form_2_flex when single top div
@@ -125,7 +125,7 @@ load_next = function (s) {
         const a_check = new Map([
             ["type", "checkbox"],
             ["onclick", "load_next('" + val + "')"],
-            ["name", "hobby"],
+            ["name", val],
             ["id", val + "_"]
         ]);
         add_child(val + "_pair", "input", a_check);
@@ -147,7 +147,7 @@ update_2_exit = function() {
     const l = Object.keys(hobints_selected).length;
     const exit_l = document.getElementById("2_exit_p");
     exit_l.innerHTML = l + " out of " + HOBINTS_SATISFIED + " hobints selected";
-    if (l == HOBINTS_SATISFIED) {
+    if (l == HOBINTS_SATISFIED && document.getElementById("form_3_pre").innerHTML == "") {
         reveal("form_3");
         add_child("form_3_pre", "p", new Map([]), "What kind of gift do you want to get them?");
     }
@@ -156,6 +156,12 @@ update_2_exit = function() {
 reveal = function(id) {
     document.getElementById(id).style.display = "block";
     document.getElementById(id).style.border = "2px solid black";
+}
+
+reveal_comp_wrap = function() {
+    if (document.getElementById("min_cost").value < document.getElementById("max_cost").value) {
+        reveal("form_5");
+    }
 }
 
 update_slider = function() {
@@ -168,18 +174,19 @@ update_slider = function() {
 update_cost_ceil = function() {
     document.getElementById("form_5").style["max_width"] = "20%";
     document.getElementById("ceil").innerHTML = "";
-    const v = document.getElementById("min_cost").value;
+    const v = parseInt(document.getElementById("min_cost").value);
     const a_label = new Map([
         ["for", "max_cost"]
     ]);
     add_child("ceil", "label", a_label, "And what's your cost ceiling? ");
     const a_num = new Map([
             ["type", "number"],
-            ["onchange", 'reveal("form_5")'],
-            ["value", v],
-            ["min", v],
+            ["onchange", 'reveal_comp_wrap()'],
+            ["value", v + 1],
+            ["min", v + 1],
             ["max", MAX_PRICE],
-            ["id", "max_cost"]
+            ["id", "max_cost"],
+            ["name", "max"]
         ]);
     add_child("ceil", "input", a_num);
 

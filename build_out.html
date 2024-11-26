@@ -7,6 +7,7 @@
         display: none;
         border-radius: 10px;
         padding: 5px;
+        margin-top: 2px;
     }
 	.flex {
         display: flex;
@@ -23,7 +24,7 @@
 	}
     .box {
         border-radius: 10px;
-        padding: 5px;
+        padding: 4px;
         border: 1px hidden rgb(0, 0, 0);
         max-width: 30%;
     }
@@ -192,7 +193,7 @@ update_2_exit = function() {
     const l = Object.keys(hobints_selected).length;
     const exit_l = document.getElementById("2_exit_p");
     exit_l.innerHTML = l + " out of " + 8 + " hobints selected";
-    if (l == 8) {
+    if (l == 8 && document.getElementById("form_3_pre").innerHTML == "") {
         reveal("form_3");
         add_child("form_3_pre", "p", new Map([]), "What kind of gift do you want to get them?");
     }
@@ -201,6 +202,12 @@ update_2_exit = function() {
 reveal = function(id) {
     document.getElementById(id).style.display = "block";
     document.getElementById(id).style.border = "2px solid black";
+}
+
+reveal_comp_wrap = function() {
+    if (document.getElementById("min_cost").value < document.getElementById("max_cost").value) {
+        reveal("form_5");
+    }
 }
 
 update_slider = function() {
@@ -213,16 +220,16 @@ update_slider = function() {
 update_cost_ceil = function() {
     document.getElementById("form_5").style["max_width"] = "20%";
     document.getElementById("ceil").innerHTML = "";
-    const v = document.getElementById("min_cost").value;
+    const v = parseInt(document.getElementById("min_cost").value);
     const a_label = new Map([
         ["for", "max_cost"]
     ]);
     add_child("ceil", "label", a_label, "And what's your cost ceiling? ");
     const a_num = new Map([
             ["type", "number"],
-            ["onchange", 'reveal("form_5")'],
-            ["value", v],
-            ["min", v],
+            ["onchange", 'reveal_comp_wrap()'],
+            ["value", v + 1],
+            ["min", v + 1],
             ["max", 400],
             ["id", "max_cost"]
         ]);
@@ -232,12 +239,12 @@ update_cost_ceil = function() {
 </script>
 </head>
 <body>
-<form action="/collect.py" method="post" target="_self">
+<form action="/collect" method="post" target="_self">
     <div id="name_age" class="box" style="max-width: 12%;">
         <div id="form_0">
             <label for="name">What's their name?</label><br>
             <!--<input type="text" name="name" onchange="load_1()"><br>-->
-            <input type="text" name="name" onclick="load_1()"><br>
+            <input type="text" name="name" onchange="load_1()"><br>
         </div><br>
         <div id="form_1"></div>
     </div><br>
@@ -247,7 +254,7 @@ update_cost_ceil = function() {
         <p id="2_exit_p" class="line" style="max-width: 45%; margin-top: 5px;">0 out of 8 hobints selected</p>
     </div>
     <div id="form_3_pre"></div>
-    <div id="form_3" class="nodisp" style="max-width: 20%; margin-top: 5px;">
+    <div id="form_3" class="nodisp" style="max-width: 20%;">
         <label for="s_1">Funny</label>
         <input id="s_1" type="range" min=1 max=10 onchange="update_slider()">
         <label for="s_1">Practical</label><br><br>
@@ -266,7 +273,7 @@ update_cost_ceil = function() {
         <div id="ceil"></div>
     </div>
     <br>
-    <div id="form_5" class="nodisp" style="max-width: 18%;">
+    <div id="form_5" class="nodisp" style="max-width: 18%; border-radius: 0px; border-width: 2px">
         <label for="submit">Are you happy with these answers?</label>
         <input type="submit" value="YES">
     </div>

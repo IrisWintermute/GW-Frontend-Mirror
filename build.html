@@ -7,6 +7,7 @@
         display: none;
         border-radius: 10px;
         padding: 5px;
+        margin-top: 2px;
     }
 	.flex {
         display: flex;
@@ -23,7 +24,7 @@
 	}
     .box {
         border-radius: 10px;
-        padding: 5px;
+        padding: 4px;
         border: 1px hidden rgb(0, 0, 0);
         max-width: 30%;
     }
@@ -37,12 +38,12 @@
 </script>
 </head>
 <body>
-<form action="/collect.py" method="post" target="_self">
+<form action="/collect" method="post" target="_self">
     <div id="name_age" class="box" style="max-width: 12%;">
         <div id="form_0">
             <label for="name">What's their name?</label><br>
             <!--<input type="text" name="name" onchange="load_1()"><br>-->
-            <input type="text" name="name" onclick="load_1()"><br>
+            <input type="text" name="name" onchange="load_1()"><br>
         </div><br>
         <div id="form_1"></div>
     </div><br>
@@ -52,26 +53,26 @@
         <p id="2_exit_p" class="line" style="max-width: 45%; margin-top: 5px;">0 out of HOBINTS_SATISFIED hobints selected</p>
     </div>
     <div id="form_3_pre"></div>
-    <div id="form_3" class="nodisp" style="max-width: 20%; margin-top: 5px;">
+    <div id="form_3" class="nodisp" style="max-width: 20%;">
         <label for="s_1">Funny</label>
-        <input id="s_1" type="range" min=1 max=10 onchange="update_slider()">
+        <input id="s_1" name="FP" type="range" min=1 max=10 onchange="update_slider()">
         <label for="s_1">Practical</label><br><br>
 
         <label for="s_2">Big</label>
-        <input id="s_2" type="range" min=1 max=10 onchange="update_slider()">
+        <input id="s_2" name="BS" type="range" min=1 max=10 onchange="update_slider()">
         <label for="s_2">Small</label><br><br>
 
         <label for="s_3">Entertaining</label>
-        <input id="s_3" type="range" min=1 max=10 onchange="update_slider()">
+        <input id="s_3" name="EU" type="range" min=1 max=10 onchange="update_slider()">
         <label for="s_3">Useful</label><br><br>
     </div><br>
     <div id="form_4" class="nodisp" style="max-width: 18%;">
         <label for="min_cost">What's your cost floor?</label>
-        <input type="number" min=1 max=MAX_PRICE value=0 id="min_cost" onchange="update_cost_ceil()"><br><br>
+        <input type="number" min=1 max=MAX_PRICE value=0 id="min_cost" name = "min" onchange="update_cost_ceil()"><br><br>
         <div id="ceil"></div>
     </div>
     <br>
-    <div id="form_5" class="nodisp" style="max-width: 18%;">
+    <div id="form_5" class="nodisp" style="max-width: 18%; border-radius: 0px; border-width: 2px">
         <label for="submit">Are you happy with these answers?</label>
         <input type="submit" value="YES">
     </div>
