@@ -15,6 +15,11 @@ add_child = function(p_id, e_type, attrs, inner) {
     p.appendChild(e);
 }
 
+reveal = function (id) {
+    document.getElementById(id).style.display = "block";
+    document.getElementById(id).style.border = "2px solid black";
+}
+
 load_1 = function() {
     if (document.getElementById("1") != undefined) {return null}
     const d = document.getElementById("form_1");
@@ -37,18 +42,7 @@ load_1 = function() {
 
 load_2 = function() {
     if (document.getElementById("2") != undefined) { return null }
-    const d = document.getElementById("form_2");
-    // const a_label = new Map([
-    //     ["for", "hobints"],
-    //     ["id", "2"]
-    // ]);
-    add_child("form_2_pre", "p", new Map([]), "What are some of their hobbies and interests?");
-    d.appendChild(br.cloneNode());
-	// const a_div_flex = new Map([
-	// 	["id", "form_2_flex"],
-	// 	["class", "flex"]
-	// ]);
-	// add_child("form_2", "div", a_div_flex);
+    reveal("form_2_wrap");
     for (let n in hobints) {
         if (n[n.length - 1] != " ") { continue }
         const a_div_pair = new Map([
@@ -72,7 +66,6 @@ load_2 = function() {
             ["class", "flex"]
         ]);
         add_child("form_2", "div", a_div);
-        document.getElementById("form_2").style.border = "2px solid black";
         document.getElementById("2_exit").style.display = "block";
     }
     
@@ -94,18 +87,12 @@ rec_get_h = function (entry) {
 
 load_next = function (s) {
     if (hobints_selected[s] == 1) {
-		// nested divs -> empty parent div
         const div = document.getElementById(s);
         div.innerHTML = "";
         delete hobints_selected[s];
         const local_h = rec_get_h(s);
         if (local_h != undefined) {
             for (h of local_h) {
-				// single top div -> remove checkbox via id
-                // if (document.getElementById(h) != null) {
-                //     document.getElementById(h).remove();
-                //     document.getElementById(h + "_").remove();
-                // }
                 delete hobints_selected[h];
             }
         }
@@ -117,7 +104,6 @@ load_next = function (s) {
     update_2_exit();
     for (let n in hobints[s]) {
         const val = hobints[s][n];
-        // id="val_" when only div has id val
         const a_div_pair = new Map([
             ["id", val + "_pair"]
         ]);
@@ -132,8 +118,6 @@ load_next = function (s) {
         const a_label = new Map([
             ["for", val + "_"]
         ]);
-		// id="s" when label+checkbox are added to local div
-        // id="form_2" when label+checkbox added to single top div
         add_child(val + "_pair", "label", a_label, val);
         const a_div = new Map([
             ["id", val],
@@ -149,13 +133,7 @@ update_2_exit = function() {
     exit_l.innerHTML = l + " out of " + HOBINTS_SATISFIED + " hobints selected";
     if (l == HOBINTS_SATISFIED && document.getElementById("form_3_pre").innerHTML == "") {
         reveal("form_3");
-        add_child("form_3_pre", "p", new Map([]), "What kind of gift do you want to get them?");
     }
-}   
-
-reveal = function(id) {
-    document.getElementById(id).style.display = "block";
-    document.getElementById(id).style.border = "2px solid black";
 }
 
 reveal_comp_wrap = function() {
@@ -171,23 +149,28 @@ update_slider = function() {
     }
 }
 
-update_cost_ceil = function() {
-    document.getElementById("form_5").style["max_width"] = "20%";
-    document.getElementById("ceil").innerHTML = "";
-    const v = parseInt(document.getElementById("min_cost").value);
-    const a_label = new Map([
-        ["for", "max_cost"]
-    ]);
-    add_child("ceil", "label", a_label, "And what's your cost ceiling? ");
-    const a_num = new Map([
-            ["type", "number"],
-            ["onchange", 'reveal_comp_wrap()'],
-            ["value", v + 1],
-            ["min", v + 1],
-            ["max", MAX_PRICE],
-            ["id", "max_cost"],
-            ["name", "max"]
-        ]);
-    add_child("ceil", "input", a_num);
+update_l_1 = function () {
+    reveal("form_5");
+    const label_1 = document.getElementById("s_l_1");
+    const v_1 = document.getElementById("s_c_1");
+    const v_2 = document.getElementById("s_c_2");
 
+    if ( parseInt(v_2.value) - parseInt(v_1.value) <= PRICE_STEP) {
+        v_1.value = parseInt(v_2.value) - PRICE_STEP;
+    } 
+    label_1.innerHTML = v_1.value;
+    label_1.style["margin-left"] = ((v_1.value * (85.5 / MAX_PRICE)) + 4.5) + "%";
+}
+
+update_l_2 = function () {
+    reveal("form_5");
+    const label_2 = document.getElementById("s_l_2");
+    const v_1 = document.getElementById("s_c_1");
+    const v_2 = document.getElementById("s_c_2");
+
+    if (parseInt(v_2.value) - parseInt(v_1.value) <= PRICE_STEP) {
+        v_2.value = parseInt(v_1.value) + PRICE_STEP;
+    }
+    label_2.innerHTML = v_2.value;
+    label_2.style["margin-left"] = ((v_2.value * (85.5 / MAX_PRICE)) + 4.5) + "%";
 }

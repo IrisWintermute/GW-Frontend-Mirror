@@ -18,9 +18,7 @@
         display: flex;
         flex-wrap: wrap;
         flex-direction: column;
-        max-width: 30%;
-        border-radius: 10px;
-        padding: 5px;
+        max-width: 100%;
 	}
     .box {
         border-radius: 10px;
@@ -31,6 +29,63 @@
     .line {
         padding: 5px;
         border: 1px solid black;
+        max-width: 40%; 
+        margin-top: 2px;
+        text-align: centre;
+    }
+    .nlabel {
+        padding-right: 1px;
+        border: 1px solid rgb(0, 0, 0);
+        max-width: 6%;
+        margin-left: 4.5%;
+        margin-bottom: 6px;
+        margin-top: 6px;
+    }
+    .slider {
+        width: 88%;
+        position: absolute;
+        z-index: 1;
+        top: 51%;
+        margin-left: 6%;
+        background-color: whitesmoke;
+        border: 1px solid black;
+        height: 9%;
+    }
+    .slider_alt {
+        width: 89%;
+        position: absolute;
+        z-index: 2;
+        top: 52%;
+        margin-left: 6%;
+        background-color: rgba(0, 0, 0, 0);
+        pointer-events: none;
+        height: 9%;
+    }
+
+    .slider::-moz-range-thumb {
+    width: 2.5%;
+    height: 200%;
+    background: darkgray;
+    border-radius: 2px;
+    border: 1px solid black;
+    cursor: pointer;
+    }
+    .slider_alt::-moz-range-thumb {
+    width: 2.5%;
+    height: 200%;
+    background: darkgray;
+    border-radius: 2px;
+    border: 1px solid black;
+    cursor: pointer;
+    pointer-events: auto;
+    }
+    .slider_alt::-webkit-slider-thumb {
+    width: 4%;
+    height: 100%;
+    }
+    .slider::-webkit-slider-thumb {
+    width: 4%;
+    height: 100%;
     }
 </style>
 
@@ -43,17 +98,20 @@
         <div id="form_0">
             <label for="name">What's their name?</label><br>
             <!--<input type="text" name="name" onchange="load_1()"><br>-->
-            <input type="text" name="name" onchange="load_1()"><br>
+            <input type="text" name="name" onclick='load_1()'><br>
         </div><br>
         <div id="form_1"></div>
     </div><br>
-    <div id="form_2_pre"></div>
-    <div id="form_2" class="flex_top" style="margin-top: 5px;"></div>
+    <div id="form_2_wrap" class="nodisp">
+    <p style="margin: 8px;">What are some of their hobbies and interests?</p>
+    <div id="form_2" class="flex_top"></div>
+    </div>
     <div id="2_exit" class="nodisp">
-        <p id="2_exit_p" class="line" style="max-width: 45%; margin-top: 5px;">0 out of HOBINTS_SATISFIED hobints selected</p>
+        <p id="2_exit_p" class="line">0 out of HOBINTS_SATISFIED hobints selected</p>
     </div>
     <div id="form_3_pre"></div>
     <div id="form_3" class="nodisp" style="max-width: 20%;">
+        <p style="margin: 8px;">What kind of gift do you want to get them?</p>
         <label for="s_1">Funny</label>
         <input id="s_1" name="FP" type="range" min=1 max=10 onchange="update_slider()">
         <label for="s_1">Practical</label><br><br>
@@ -66,13 +124,15 @@
         <input id="s_3" name="EU" type="range" min=1 max=10 onchange="update_slider()">
         <label for="s_3">Useful</label><br><br>
     </div><br>
-    <div id="form_4" class="nodisp" style="max-width: 18%;">
-        <label for="min_cost">What's your cost floor?</label>
-        <input type="number" min=1 max=MAX_PRICE value=0 id="min_cost" name = "min" onchange="update_cost_ceil()"><br><br>
-        <div id="ceil"></div>
+    <div id="form_4" class="nodisp" style="position: relative;">
+        <label for="cost">What's your cost range?</label><br>
+        <div id="s_l_1" class="nlabel" style="text-align: center; margin-bottom: 30px;">0</div>
+        <input id="s_c_1" name="min" type="range" class="slider" min=0 max=MAX_PRICE step=PRICE_STEP value=0 oninput='update_l_1()'>
+        <input id="s_c_2" type="range" class="slider_alt" min=0 max=MAX_PRICE step=PRICE_STEP value=MAX_PRICE oninput='update_l_2()'>
+        <div id="s_l_2" name="min" class="nlabel" style="text-align: center; margin-left: 90%;">MAX_PRICE</div>
     </div>
     <br>
-    <div id="form_5" class="nodisp" style="max-width: 18%; border-radius: 0px; border-width: 2px">
+    <div id="form_5" class="nodisp" style="max-width: 18%; border-radius: 0px;">
         <label for="submit">Are you happy with these answers?</label>
         <input type="submit" value="YES">
     </div>

@@ -1,5 +1,6 @@
 {
-    "HOBINTS_SATISFIED" : 8,
+    "HOBINTS_SATISFIED" : 1,
     "MAX_PRICE" : 400,
+    "PRICE_STEP" : 5,
     "MAX_AGE" : 130
 }
