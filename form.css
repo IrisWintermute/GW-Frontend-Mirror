@@ -1,0 +1,102 @@
+
+:root {
+    --slider_width: 85%;
+    --thumb_width: 2.5%;
+    --thumb_height: 200%;
+}
+.nodisp {
+    max-width: 30%;
+    display: none;
+    border-radius: 10px;
+    padding: 5px;
+    margin-top: 2px;
+}
+.flex {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+.flex_top {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    max-width: 100%;
+}
+.box {
+    border-radius: 10px;
+    padding: 4px;
+    border: 1px hidden rgb(0, 0, 0);
+    max-width: 30%;
+}
+.line {
+    padding: 5px;
+    border: 1px solid black;
+    max-width: 40%; 
+    margin-top: 2px;
+    text-align: center;
+}
+.nlabel {
+    padding-right: 1px;
+    border: 1px solid rgb(0, 0, 0);
+    text-align: center;
+    max-width: 6%;
+    margin-left: 4.2%;
+    margin-bottom: 6px;
+    margin-top: 6px;
+}
+.slider {
+    width: var(--slider_width);
+    position: absolute;
+    z-index: 1;
+    top: 51%;
+    margin-left: 6%;
+    background-color: rgba(0, 0, 0, 0);
+    pointer-events: none;
+    height: 9%;
+}
+.slider_alt {
+    width: var(--slider_width);
+    position: absolute;
+    z-index: 2;
+    top: 51%;
+    margin-left: 6%;
+    background-color: rgba(0, 0, 0, 0);
+    pointer-events: none;
+    height: 9%;
+}
+.decoy_track {
+    width: calc(var(--slider_width) - 1%);
+    position: absolute;
+    z-index: 0;
+    top: 51%;
+    margin-left: 6%;
+    background-color: whitesmoke;
+    border: 1px solid black;
+    height: 9%;
+}
+.slider::-moz-range-thumb {
+    width: var(--thumb_width);
+    height: var(--thumb_height);
+    background: darkgray;
+    border-radius: 2px;
+    border: 1px solid black;
+    cursor: pointer;
+    pointer-events: auto;
+}
+.slider_alt::-moz-range-thumb {
+    width: var(--thumb_width);
+    height: var(--thumb_height);
+    background: darkgray;
+    border-radius: 2px;
+    border: 1px solid black;
+    cursor: pointer;
+    pointer-events: auto;
+}
+.slider_alt::-webkit-slider-thumb {
+    width: var(--thumb_width);
+    height: var(--thumb_height);
+}
+.slider::-webkit-slider-thumb {
+    width: var(--thumb_width);
+    height: var(--thumb_height);
+}

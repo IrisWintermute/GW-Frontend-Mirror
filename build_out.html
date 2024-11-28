@@ -1,93 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<style>
-    .nodisp {
-        max-width: 30%;
-        display: none;
-        border-radius: 10px;
-        padding: 5px;
-        margin-top: 2px;
-    }
-	.flex {
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: row;
-	}
-	.flex_top {
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: column;
-        max-width: 100%;
-	}
-    .box {
-        border-radius: 10px;
-        padding: 4px;
-        border: 1px hidden rgb(0, 0, 0);
-        max-width: 30%;
-    }
-    .line {
-        padding: 5px;
-        border: 1px solid black;
-        max-width: 40%; 
-        margin-top: 2px;
-        text-align: centre;
-    }
-    .nlabel {
-        padding-right: 1px;
-        border: 1px solid rgb(0, 0, 0);
-        max-width: 6%;
-        margin-left: 4.5%;
-        margin-bottom: 6px;
-        margin-top: 6px;
-    }
-    .slider {
-        width: 88%;
-        position: absolute;
-        z-index: 1;
-        top: 51%;
-        margin-left: 6%;
-        background-color: whitesmoke;
-        border: 1px solid black;
-        height: 9%;
-    }
-    .slider_alt {
-        width: 89%;
-        position: absolute;
-        z-index: 2;
-        top: 52%;
-        margin-left: 6%;
-        background-color: rgba(0, 0, 0, 0);
-        pointer-events: none;
-        height: 9%;
-    }
 
-    .slider::-moz-range-thumb {
-    width: 2.5%;
-    height: 200%;
-    background: darkgray;
-    border-radius: 2px;
+<style>
+
+:root {
+    --slider_width: 85%;
+    --thumb_width: 2.5%;
+    --thumb_height: 200%;
+}
+.nodisp {
+    max-width: 30%;
+    display: none;
+    border-radius: 10px;
+    padding: 5px;
+    margin-top: 2px;
+}
+.flex {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+.flex_top {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    max-width: 100%;
+}
+.box {
+    border-radius: 10px;
+    padding: 4px;
+    border: 1px hidden rgb(0, 0, 0);
+    max-width: 30%;
+}
+.line {
+    padding: 5px;
     border: 1px solid black;
-    cursor: pointer;
-    }
-    .slider_alt::-moz-range-thumb {
-    width: 2.5%;
-    height: 200%;
+    max-width: 40%; 
+    margin-top: 2px;
+    text-align: center;
+}
+.nlabel {
+    padding-right: 1px;
+    border: 1px solid rgb(0, 0, 0);
+    text-align: center;
+    max-width: 6%;
+    margin-left: 4.2%;
+    margin-bottom: 6px;
+    margin-top: 6px;
+}
+.slider {
+    width: var(--slider_width);
+    position: absolute;
+    z-index: 1;
+    top: 51%;
+    margin-left: 6%;
+    background-color: rgba(0, 0, 0, 0);
+    pointer-events: none;
+    height: 9%;
+}
+.slider_alt {
+    width: var(--slider_width);
+    position: absolute;
+    z-index: 2;
+    top: 51%;
+    margin-left: 6%;
+    background-color: rgba(0, 0, 0, 0);
+    pointer-events: none;
+    height: 9%;
+}
+.decoy_track {
+    width: calc(var(--slider_width) - 1%);
+    position: absolute;
+    z-index: 0;
+    top: 51%;
+    margin-left: 6%;
+    background-color: whitesmoke;
+    border: 1px solid black;
+    height: 9%;
+}
+.slider::-moz-range-thumb {
+    width: var(--thumb_width);
+    height: var(--thumb_height);
     background: darkgray;
     border-radius: 2px;
     border: 1px solid black;
     cursor: pointer;
     pointer-events: auto;
-    }
-    .slider_alt::-webkit-slider-thumb {
-    width: 4%;
-    height: 100%;
-    }
-    .slider::-webkit-slider-thumb {
-    width: 4%;
-    height: 100%;
-    }
-</style>
+}
+.slider_alt::-moz-range-thumb {
+    width: var(--thumb_width);
+    height: var(--thumb_height);
+    background: darkgray;
+    border-radius: 2px;
+    border: 1px solid black;
+    cursor: pointer;
+    pointer-events: auto;
+}
+.slider_alt::-webkit-slider-thumb {
+    width: var(--thumb_width);
+    height: var(--thumb_height);
+}
+.slider::-webkit-slider-thumb {
+    width: var(--thumb_width);
+    height: var(--thumb_height);
+}</style>
 
 <script>
 const br = document.createElement("br");
@@ -142,20 +159,8 @@ load_1 = function() {
 }
 
 load_2 = function() {
-    if (document.getElementById("2") != undefined) { return null }
-    // const d = document.getElementById("form_2");
-    // const a_label = new Map([
-    //     ["for", "hobints"],
-    //     ["id", "2"]
-    // ]);
-    // add_child("form_2_pre", "p", new Map([]), "What are some of their hobbies and interests?");
-    // d.appendChild(br.cloneNode());
+    if (document.getElementById("form_2").innerHTML != "") { return null }
     reveal("form_2_wrap");
-	// const a_div_flex = new Map([
-	// 	["id", "form_2_flex"],
-	// 	["class", "flex"]
-	// ]);
-	// add_child("form_2", "div", a_div_flex);
     for (let n in hobints) {
         if (n[n.length - 1] != " ") { continue }
         const a_div_pair = new Map([
@@ -200,18 +205,12 @@ rec_get_h = function (entry) {
 
 load_next = function (s) {
     if (hobints_selected[s] == 1) {
-		// nested divs -> empty parent div
         const div = document.getElementById(s);
         div.innerHTML = "";
         delete hobints_selected[s];
         const local_h = rec_get_h(s);
         if (local_h != undefined) {
             for (h of local_h) {
-				// single top div -> remove checkbox via id
-                // if (document.getElementById(h) != null) {
-                //     document.getElementById(h).remove();
-                //     document.getElementById(h + "_").remove();
-                // }
                 delete hobints_selected[h];
             }
         }
@@ -223,7 +222,6 @@ load_next = function (s) {
     update_2_exit();
     for (let n in hobints[s]) {
         const val = hobints[s][n];
-        // id="val_" when only div has id val
         const a_div_pair = new Map([
             ["id", val + "_pair"]
         ]);
@@ -238,8 +236,6 @@ load_next = function (s) {
         const a_label = new Map([
             ["for", val + "_"]
         ]);
-		// id="s" when label+checkbox are added to local div
-        // id="form_2" when label+checkbox added to single top div
         add_child(val + "_pair", "label", a_label, val);
         const a_div = new Map([
             ["id", val],
@@ -255,7 +251,6 @@ update_2_exit = function() {
     exit_l.innerHTML = l + " out of " + 1 + " hobints selected";
     if (l == 1 && document.getElementById("form_3_pre").innerHTML == "") {
         reveal("form_3");
-        // add_child("form_3_pre", "p", new Map([]), "What kind of gift do you want to get them?");
     }
 }
 
@@ -272,26 +267,6 @@ update_slider = function() {
     }
 }
 
-update_cost_ceil = function() {
-    document.getElementById("form_5").style["max_width"] = "20%";
-    document.getElementById("ceil").innerHTML = "";
-    const v = parseInt(document.getElementById("min_cost").value);
-    const a_label = new Map([
-        ["for", "max_cost"]
-    ]);
-    add_child("ceil", "label", a_label, "And what's your cost ceiling? ");
-    const a_num = new Map([
-            ["type", "number"],
-            ["onchange", 'reveal_comp_wrap()'],
-            ["value", v + 1],
-            ["min", v + 1],
-            ["max", 400],
-            ["id", "max_cost"],
-            ["name", "max"]
-        ]);
-    add_child("ceil", "input", a_num);
-}
-
 update_l_1 = function () {
     reveal("form_5");
     const label_1 = document.getElementById("s_l_1");
@@ -302,7 +277,7 @@ update_l_1 = function () {
         v_1.value = parseInt(v_2.value) - 5;
     } 
     label_1.innerHTML = v_1.value;
-    label_1.style["margin-left"] = ((v_1.value * (85.5 / 400)) + 4.5) + "%";
+    label_1.style["margin-left"] = ((v_1.value * (84.2 / 400)) + 4.3) + "%";
 }
 
 update_l_2 = function () {
@@ -315,8 +290,9 @@ update_l_2 = function () {
         v_2.value = parseInt(v_1.value) + 5;
     }
     label_2.innerHTML = v_2.value;
-    label_2.style["margin-left"] = ((v_2.value * (85.5 / 400)) + 4.5) + "%";
+    label_2.style["margin-left"] = ((v_2.value * (84.2 / 400)) + 4.3) + "%";
 }</script>
+
 </head>
 <body>
 <form action="/collect" method="post" target="_self">
@@ -324,7 +300,7 @@ update_l_2 = function () {
         <div id="form_0">
             <label for="name">What's their name?</label><br>
             <!--<input type="text" name="name" onchange="load_1()"><br>-->
-            <input type="text" name="name" onclick='load_1()'><br>
+            <input type="text" name="name" onclick='reveal("form_4")'><br>
         </div><br>
         <div id="form_1"></div>
     </div><br>
@@ -352,10 +328,11 @@ update_l_2 = function () {
     </div><br>
     <div id="form_4" class="nodisp" style="position: relative;">
         <label for="cost">What's your cost range?</label><br>
-        <div id="s_l_1" class="nlabel" style="text-align: center; margin-bottom: 30px;">0</div>
-        <input id="s_c_1" type="range" class="slider" min=0 max=400 step=5 value=0 oninput='update_l_1()'>
+        <div id="s_l_1" class="nlabel" style="margin-bottom: 8%;">0</div>
+        <div class="decoy_track"></div>
+        <input id="s_c_1" name="min" type="range" class="slider" min=0 max=400 step=5 value=0 oninput='update_l_1()'>
         <input id="s_c_2" type="range" class="slider_alt" min=0 max=400 step=5 value=400 oninput='update_l_2()'>
-        <div id="s_l_2" class="nlabel" style="text-align: center; margin-left: 90%;">400</div>
+        <div id="s_l_2" name="min" class="nlabel" style="margin-left: 88.5%;">400</div>
     </div>
     <br>
     <div id="form_5" class="nodisp" style="max-width: 18%; border-radius: 0px;">

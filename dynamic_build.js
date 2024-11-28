@@ -41,7 +41,7 @@ load_1 = function() {
 }
 
 load_2 = function() {
-    if (document.getElementById("2") != undefined) { return null }
+    if (document.getElementById("form_2").innerHTML != "") { return null }
     reveal("form_2_wrap");
     for (let n in hobints) {
         if (n[n.length - 1] != " ") { continue }
@@ -159,7 +159,7 @@ update_l_1 = function () {
         v_1.value = parseInt(v_2.value) - PRICE_STEP;
     } 
     label_1.innerHTML = v_1.value;
-    label_1.style["margin-left"] = ((v_1.value * (85.5 / MAX_PRICE)) + 4.5) + "%";
+    label_1.style["margin-left"] = ((v_1.value * (84.2 / MAX_PRICE)) + 4.3) + "%";
 }
 
 update_l_2 = function () {
@@ -172,5 +172,5 @@ update_l_2 = function () {
         v_2.value = parseInt(v_1.value) + PRICE_STEP;
     }
     label_2.innerHTML = v_2.value;
-    label_2.style["margin-left"] = ((v_2.value * (85.5 / MAX_PRICE)) + 4.5) + "%";
+    label_2.style["margin-left"] = ((v_2.value * (84.2 / MAX_PRICE)) + 4.3) + "%";
 }
