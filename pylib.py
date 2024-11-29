@@ -19,11 +19,11 @@ def build_form(debug = False):
     # with open("global_config.json", "r") as f:
     #     gcjs = json.load(f)
     sources = [
-        ("build.html", "rl"),
-        ("dynamic_build.js", "rl"),
-        ("form.css", "rl"),
-        ("hobints.json", "r"),
-        ("global_config.json", "jl")
+        ("form_data/build.html", "rl"),
+        ("form_data/dynamic_build.js", "rl"),
+        ("form_data/form.css", "rl"),
+        ("form_data/hobints.json", "r"),
+        ("form_data/global_config.json", "jl")
     ]
     bh, dbjs, fc, hij, gcj = tuple(list(map(getfile, sources)))
     x, y = bh.index("<script>\n"), bh.index("<style>\n")
