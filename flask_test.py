@@ -23,6 +23,6 @@ def collect_get():
 @app.post("/collect")
 def collect_post():
     print(request.form)
-    with open("test.json", "w") as f:
+    with open("dump/test.json", "w") as f:
         json.dump(request.form, f)
     

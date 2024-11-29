@@ -35,6 +35,6 @@ def build_form(debug = False):
     for v in gcj.keys():
         out = out.replace(v, str(gcj[v]))
     if debug:
-        with open("build_out.html", "w") as f:
+        with open("dump/build_out.html", "w") as f:
             f.write(out)
     return out
