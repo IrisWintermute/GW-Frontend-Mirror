@@ -59,16 +59,6 @@
     pointer-events: none;
     height: 9%;
 }
-.slider_alt {
-    width: var(--slider_width);
-    position: absolute;
-    z-index: 2;
-    top: 51%;
-    margin-left: 6%;
-    background-color: rgba(0, 0, 0, 0);
-    pointer-events: none;
-    height: 9%;
-}
 .decoy_track {
     width: calc(var(--slider_width) - 1%);
     position: absolute;
@@ -79,6 +69,12 @@
     border: 1px solid black;
     height: 9%;
 }
+input[type=range]::-ms-track {
+    width: var(--slider_width);
+    background: transparent;
+    color: transparent;
+    pointer-events: none;
+}
 .slider::-moz-range-thumb {
     width: var(--thumb_width);
     height: var(--thumb_height);
@@ -88,7 +84,8 @@
     cursor: pointer;
     pointer-events: auto;
 }
-.slider_alt::-moz-range-thumb {
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
     width: var(--thumb_width);
     height: var(--thumb_height);
     background: darkgray;
@@ -97,13 +94,14 @@
     cursor: pointer;
     pointer-events: auto;
 }
-.slider_alt::-webkit-slider-thumb {
+.slider::-ms-thumb {
     width: var(--thumb_width);
     height: var(--thumb_height);
-}
-.slider::-webkit-slider-thumb {
-    width: var(--thumb_width);
-    height: var(--thumb_height);
+    background: darkgray;
+    border-radius: 2px;
+    border: 1px solid black;
+    cursor: pointer;
+    pointer-events: auto;
 }</style>
 
 <script>
@@ -111,13 +109,33 @@ const br = document.createElement("br");
 
 const hobints = {
     "COMMENT" : "Some names have a space as their final character. This is intentional, and is used to identify root items.",
-    "sports " : ["contact sports", "athletics", "team sports"],
-    "team sports" : ["football", "tennis", "rugby"],
-    "art " : ["digital", "physical"],
-    "physical" : ["painting", "illustration"],
+	"RULES" : "Maximum depth of 4. Maximum array length of 4.",
+
+    "sports " : ["athletics", "team sports", "contact sports", "country sports"],
+		"athletics" : ["indoors", "outdoors"],
+			"indoor" : ["gymnastics"],
+			"outdoor" : ["swimming", "cycling", "running"],
+    	"team sports" : ["football", "rugby", "tennis"],
+		"country sports" : ["equestrianism", "climbing", "golf"],
+		"contact sports" : ["rugby", "boxing", "lacrosse"],
+    "art " : ["appreciating art", "making art"],
+    	"appreciating art" : ["fine art", "classical", "modern"],
+			"modern" : ["comics", "manga", "modernist art", "postmodern art"],
+		"making art" : ["illustration", "painting", "sketching", "digital"],
     "reading " : ["fiction", "non-fiction"],
-    "fiction" : ["fantasy", "science fiction", "crime", "thriller"],
-    "non-fiction" : ["self-help", "biographical", "discussion", "pop-sci"]
+		"fiction" : ["this world?", "or another?"],
+		"this world?" : ["crime", "thriller", "romance", "horror", "realistic fantasy"],
+		"or another?" : ["fantasy", "science fiction", "fantastic realism"],
+		"non-fiction" : ["personal", "impersonal"],
+			"personal" : ["self-help", "biographical"],
+			"impersonal" : ["discussion", "pop-sci", "history", "technical"],
+	"film " : ["sci-fi", "fantasy", "family", "comedy", "horror", "thriller", "action films"],
+	"fashion" : [],
+	"toys" : [],
+	"outdoors" : ["casual", "rough terrain"],
+		"rough terrain" : ["hiking", "camping", "mountain biking"],
+		"casual" : ["walking", "fishing", "foraging"],
+	"music" : ["pop", "rock", "electronic", "disco", "classical", "jazz"]
 };
 let hobints_selected = {};
 
@@ -300,7 +318,7 @@ update_l_2 = function () {
         <div id="form_0">
             <label for="name">What's their name?</label><br>
             <!--<input type="text" name="name" onchange="load_1()"><br>-->
-            <input type="text" name="name" onclick='reveal("form_4")'><br>
+            <input type="text" name="name" onchange='load_1()'><br>
         </div><br>
         <div id="form_1"></div>
     </div><br>
@@ -331,7 +349,7 @@ update_l_2 = function () {
         <div id="s_l_1" class="nlabel" style="margin-bottom: 8%;">0</div>
         <div class="decoy_track"></div>
         <input id="s_c_1" name="min" type="range" class="slider" min=0 max=400 step=5 value=0 oninput='update_l_1()'>
-        <input id="s_c_2" type="range" class="slider_alt" min=0 max=400 step=5 value=400 oninput='update_l_2()'>
+        <input id="s_c_2" type="range" class="slider" stlye="z-index: 2;" min=0 max=400 step=5 value=400 oninput='update_l_2()'>
         <div id="s_l_2" name="min" class="nlabel" style="margin-left: 88.5%;">400</div>
     </div>
     <br>
