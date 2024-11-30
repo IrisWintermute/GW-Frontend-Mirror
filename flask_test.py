@@ -6,10 +6,16 @@ import json
 
 app = Flask(__name__)
 
+vercel_url = "gw-frontend.vercel.app"
+vercel = True
+if vercel:
+    url = vercel_url
+else:
+    url = "http://127.0.0.1:5000"
 @app.route("/")
 def entry():
     with open("entry.html", "r") as f:
-        return f.read().replace("URL", "http://127.0.0.1:5000/build")
+        return f.read().replace("URL", url + "/build")
 
 @app.get("/build")
 def get():
