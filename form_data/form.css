@@ -5,7 +5,7 @@
     --thumb_height: 200%;
 }
 .nodisp {
-    max-width: 30%;
+    max-width: 500px;
     display: none;
     border-radius: 10px;
     padding: 5px;
@@ -45,6 +45,8 @@
     margin-top: 6px;
 }
 .slider {
+    appearance: none;
+    -webkit-appearance: none;
     width: var(--slider_width);
     position: absolute;
     z-index: 1;
@@ -55,7 +57,7 @@
     height: 9%;
 }
 .decoy_track {
-    width: calc(var(--slider_width) - 1%);
+    width: calc(var(--slider_width) - 0.5%);
     position: absolute;
     z-index: 0;
     top: 51%;
@@ -64,12 +66,21 @@
     border: 1px solid black;
     height: 9%;
 }
+.slider::-ms-thumb {
+    width: var(--thumb_width);
+    height: var(--thumb_height);
+    background: darkgray;
+    border-radius: 2px;
+    border: 1px solid black;
+    cursor: pointer;
+    pointer-events: auto;
+}
 .slider::-ms-track {
     width: var(--slider_width);
-    background: transparent;
-    color: transparent;
+    background-color: rgba(0, 0, 0, 0);
     pointer-events: none;
 }
+
 .slider::-moz-range-thumb {
     width: var(--thumb_width);
     height: var(--thumb_height);
@@ -94,12 +105,4 @@
     background: rgba(0, 0, 0, 0);
     pointer-events: none;
 }
-.slider::-ms-thumb {
-    width: var(--thumb_width);
-    height: var(--thumb_height);
-    background: darkgray;
-    border-radius: 2px;
-    border: 1px solid black;
-    cursor: pointer;
-    pointer-events: auto;
-}
+

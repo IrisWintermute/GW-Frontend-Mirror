@@ -1,4 +1,4 @@
-import json
+import json, sqlite3
 
 def getfile(wrap):
     s, m = wrap
@@ -8,16 +8,6 @@ def getfile(wrap):
         elif m == "jl": return json.load(f)
 
 def build_form(debug = False):
-    # with open("build.html", "r") as f:
-    #     bh = f.readlines()
-    # with open("dynamic_build.js", "r") as f:
-    #     dbj = f.readlines()
-    # with open("dynamic_build.js", "r") as f:
-    #     dbj = f.readlines()
-    # with open("hobints.json", "r") as f:
-    #     hijs = f.read()
-    # with open("global_config.json", "r") as f:
-    #     gcjs = json.load(f)
     sources = [
         ("form_data/build.html", "rl"),
         ("form_data/dynamic_build.js", "rl"),
@@ -38,3 +28,15 @@ def build_form(debug = False):
         with open("dump/build_out.html", "w") as f:
             f.write(out)
     return out
+
+def create_profile_db():
+    pass
+    con = sqlite3.connect("profiles.db")
+    cur = con.cursor()
+    for ins in getfile(("create_profile_sql.json", "jl")):
+        cur.execute(ins)
+    con.commit()
+
+
+def add_form_to_db():
+    return uid

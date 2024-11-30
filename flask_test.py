@@ -1,5 +1,5 @@
 from flask import Flask, request
-from app_serve import build_form
+from pylib import build_form
 import json
 
 # Serve web app using Flask
@@ -22,7 +22,17 @@ def collect_get():
 
 @app.post("/collect")
 def collect_post():
-    print(request.form)
     with open("dump/test.json", "w") as f:
         json.dump(request.form, f)
+    # insert request.form into profile database
+    # add browser cookie with profile uid
+    profiles = request.cookies.get("GW_profiles")
+    uid = add_form_to_db(request.form)
+    n = request.form.name
+    n_c = profiles.count(n)
+    if n_c > 1:
+        n += " - " + str(n_c)
+    profiles += n + ":" + uid + "\n"
+    resp = make_response(render_template("collect.html"))
+    resp.set_cookie("GW_profiles", profiles)
     
