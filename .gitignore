@@ -1,4 +1,2 @@
-# build_out is an artefact for serving to web clients. Server-side instances are only needed for debugging.
-# same applies for test.json
-build_out.html
+# test.json is an artefact for serving to backend. Server-side instances are only needed for debugging.
 test.json
