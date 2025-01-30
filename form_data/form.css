@@ -91,7 +91,7 @@
     pointer-events: auto;
 }
 .slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
+    --webkit-appearance: none;
     width: var(--thumb_width);
     height: var(--thumb_height);
     background: darkgray;

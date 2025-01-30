@@ -7,9 +7,9 @@ import json
 app = Flask(__name__)
 
 vercel_url = "gw-frontend.vercel.app"
-vercel = True
+vercel = False
 if vercel:
-    url = vercel_url
+    url = vercel_url + "/build"
 else:
     url = "http://127.0.0.1:5000"
 @app.route("/")
